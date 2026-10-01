@@ -1,6 +1,8 @@
 # aura-zero-api
 
-Backend do **Aura Zero**, um jogo de luta 3D em pixel-art que escrevi em three.js. A API dá ao jogo perfis, histórico de lutas, conquistas, ranking e avaliações dos lutadores.
+[![CI](https://github.com/mosconileo/aura-zero-api/actions/workflows/ci.yml/badge.svg)](https://github.com/mosconileo/aura-zero-api/actions/workflows/ci.yml)
+
+Backend do **Aura Zero**, um [jogo de luta 3D em pixel-art](https://github.com/mosconileo/aura-zero) que escrevi em three.js. A API dá ao jogo perfis, histórico de lutas, conquistas, ranking e avaliações dos lutadores.
 
 **Stack:** NestJS 12 · TypeScript · PostgreSQL 17 + Prisma 7 · Redis 7 (cache, ranking, filas BullMQ) · Vitest · pino · Sentry · GitHub Actions
 
