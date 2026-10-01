@@ -19,7 +19,7 @@ describe('health', () => {
 describe('players', () => {
   it('registra e devolve o token uma unica vez (banco guarda so o hash)', async () => {
     const res = await h.http.post('/players').send({ nickname: 'leo' }).expect(201)
-    expect(res.body.token).toMatch(/^kj_/)
+    expect(res.body.token).toMatch(/^az_/)
     const row = await h.prisma.player.findUniqueOrThrow({ where: { id: res.body.player.id } })
     expect(row.tokenHash).not.toContain(res.body.token)
   })
@@ -33,7 +33,7 @@ describe('players', () => {
 
   it('rotas autenticadas rejeitam token ausente ou falso', async () => {
     await h.http.get('/players/me').expect(401)
-    await h.http.get('/players/me').set(auth('kj_falso')).expect(401)
+    await h.http.get('/players/me').set(auth('az_falso')).expect(401)
   })
 
   it('perfil inexistente vira 404', async () => {

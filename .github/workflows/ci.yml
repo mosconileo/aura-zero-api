@@ -12,12 +12,12 @@ jobs:
       postgres:
         image: postgres:17-alpine
         env:
-          POSTGRES_USER: kaiju
-          POSTGRES_PASSWORD: kaiju
-          POSTGRES_DB: kaiju_test
+          POSTGRES_USER: aura
+          POSTGRES_PASSWORD: aura
+          POSTGRES_DB: aura_test
         ports: ["5432:5432"]
         options: >-
-          --health-cmd "pg_isready -U kaiju" --health-interval 2s --health-retries 30
+          --health-cmd "pg_isready -U aura" --health-interval 2s --health-retries 30
       redis:
         image: redis:7-alpine
         ports: ["6379:6379"]
@@ -25,8 +25,8 @@ jobs:
           --health-cmd "redis-cli ping" --health-interval 2s --health-retries 30
     env:
       # prisma.config.ts exige DATABASE_URL até para gerar o client
-      DATABASE_URL: postgresql://kaiju:kaiju@localhost:5432/kaiju_test
-      TEST_DATABASE_URL: postgresql://kaiju:kaiju@localhost:5432/kaiju_test
+      DATABASE_URL: postgresql://aura:aura@localhost:5432/aura_test
+      TEST_DATABASE_URL: postgresql://aura:aura@localhost:5432/aura_test
       TEST_REDIS_URL: redis://localhost:6379/1
     steps:
       - uses: actions/checkout@v4

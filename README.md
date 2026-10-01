@@ -1,6 +1,6 @@
-# kaiju-api
+# aura-zero-api
 
-Backend do **Aura Zero** (pasta *Ascensão de Kaiju*), um jogo de luta 3D em pixel-art que escrevi em three.js. A API dá ao jogo perfis, histórico de lutas, conquistas, ranking e avaliações dos lutadores.
+Backend do **Aura Zero**, um jogo de luta 3D em pixel-art que escrevi em three.js. A API dá ao jogo perfis, histórico de lutas, conquistas, ranking e avaliações dos lutadores.
 
 **Stack:** NestJS 12 · TypeScript · PostgreSQL 17 + Prisma 7 · Redis 7 (cache, ranking, filas BullMQ) · Vitest · pino · Sentry · GitHub Actions
 
@@ -64,7 +64,7 @@ Os erros seguem um formato único, `{ statusCode, error, issues? }`. Uma falha d
 ## Testes
 
 - **Unitários** (`src/**/*.spec.ts`): rating, regras de conquista, cursor e schema de entrada.
-- **E2E** (`test/*.e2e.ts`): sobem o app inteiro contra Postgres e Redis reais (banco `kaiju_test` e Redis db 1, separados do dev). Cobrem idempotência concorrente, lost update, worker assíncrono, reconstrução do ranking, invalidação de cache, paginação sem pular nem repetir e erros 400/401/404/409.
+- **E2E** (`test/*.e2e.ts`): sobem o app inteiro contra Postgres e Redis reais (banco `aura_test` e Redis db 1, separados do dev). Cobrem idempotência concorrente, lost update, worker assíncrono, reconstrução do ranking, invalidação de cache, paginação sem pular nem repetir e erros 400/401/404/409.
 - O CI ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) roda typecheck, build e a suíte completa com Postgres e Redis como services.
 
 Os testes rodam com SWC (`unplugin-swc`) porque o esbuild padrão do Vitest não emite `emitDecoratorMetadata`, de que a injeção de dependência do Nest precisa.

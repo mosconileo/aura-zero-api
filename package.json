@@ -1,7 +1,7 @@
 {
-  "name": "kaiju-api",
+  "name": "aura-zero-api",
   "version": "0.1.0",
-  "description": "API do jogo Ascensao de Kaiju: perfis, partidas, conquistas, ranking e avaliacoes",
+  "description": "API do jogo Aura Zero: perfis, partidas, conquistas, ranking e avaliacoes",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/main.js",

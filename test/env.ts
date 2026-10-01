@@ -5,7 +5,7 @@ import type { Env } from '../src/config.js'
 export const TEST_ENV: Env = {
   NODE_ENV: 'test',
   PORT: 0,
-  DATABASE_URL: process.env.TEST_DATABASE_URL ?? 'postgresql://kaiju:kaiju@localhost:5433/kaiju_test',
+  DATABASE_URL: process.env.TEST_DATABASE_URL ?? 'postgresql://aura:aura@localhost:5433/aura_test',
   REDIS_URL: process.env.TEST_REDIS_URL ?? 'redis://localhost:6380/1',
   CORS_ORIGIN: 'http://localhost:5183',
   SENTRY_DSN: undefined,

@@ -2,15 +2,15 @@ services:
   postgres:
     image: postgres:17-alpine
     environment:
-      POSTGRES_USER: kaiju
-      POSTGRES_PASSWORD: kaiju
-      POSTGRES_DB: kaiju
+      POSTGRES_USER: aura
+      POSTGRES_PASSWORD: aura
+      POSTGRES_DB: aura
     ports: ["5433:5432"]
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U kaiju"]
+      test: ["CMD-SHELL", "pg_isready -U aura"]
       interval: 2s
       retries: 30
 
