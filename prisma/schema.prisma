@@ -1,0 +1,112 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum GameMode {
+  VERSUS_CPU
+  ARCADE
+}
+
+enum Difficulty {
+  FACIL
+  NORMAL
+  DIFICIL
+}
+
+enum MatchResult {
+  WIN
+  LOSS
+}
+
+model Player {
+  id        String   @id @default(cuid())
+  nickname  String   @unique
+  /// sha256 do token de API. O token em si nunca é gravado.
+  tokenHash String   @unique
+  rating    Int      @default(1000)
+  createdAt DateTime @default(now())
+
+  matches      Match[]
+  achievements PlayerAchievement[]
+  reviews      Review[]
+}
+
+/// Catálogo de lutadores, espelhado de src/fighters/roster.js do jogo.
+model Fighter {
+  id   String @id
+  name String
+
+  matches Match[]  @relation("MatchFighter")
+  reviews Review[]
+}
+
+model Match {
+  id            String      @id @default(cuid())
+  playerId      String
+  /// Chave de idempotência gerada no cliente: reenviar a mesma luta não duplica.
+  clientMatchId String
+  mode          GameMode
+  difficulty    Difficulty
+  fighterId     String
+  opponentId    String
+  result        MatchResult
+  roundsWon     Int
+  roundsLost    Int
+  maxCombo      Int
+  damageDealt   Int
+  hpRemaining   Int
+  hpMax         Int
+  boss          Boolean     @default(false)
+  durationMs    Int
+  ratingDelta   Int
+  createdAt     DateTime    @default(now())
+
+  player  Player  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  fighter Fighter @relation("MatchFighter", fields: [fighterId], references: [id])
+
+  @@unique([playerId, clientMatchId])
+  @@index([playerId, createdAt(sort: Desc), id(sort: Desc)])
+}
+
+model Achievement {
+  code        String @id
+  name        String
+  description String
+
+  unlocks PlayerAchievement[]
+}
+
+model PlayerAchievement {
+  playerId        String
+  achievementCode String
+  matchId         String?
+  unlockedAt      DateTime @default(now())
+
+  player      Player      @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementCode], references: [code])
+
+  @@id([playerId, achievementCode])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  playerId  String
+  fighterId String
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  player  Player  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  fighter Fighter @relation(fields: [fighterId], references: [id])
+
+  @@unique([playerId, fighterId])
+  @@index([fighterId, createdAt(sort: Desc), id(sort: Desc)])
+}
